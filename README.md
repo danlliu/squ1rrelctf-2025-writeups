@@ -3,4 +3,4 @@
 my writeups for squ1rrelctf!
 
 - [russian games](./rev/russian-games/WRITEUP.md)
-- [casino](./pwn/russian-games/WRITEUP.md)
+- [casino](./pwn/casino/WRITEUP.md)
