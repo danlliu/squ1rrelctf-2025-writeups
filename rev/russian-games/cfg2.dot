@@ -1,0 +1,32 @@
+digraph G {
+    subgraph nodes {
+        node [style=filled,shape=rect,fontname="Courier New"]
+        b0 [label="BB#0: loop preheader\np = arg0\nq = &M[24576]\nx = 0\ns = 0"]
+        b1 [label="BB#1: loop header\nlocal2 = *q\ngoto BB#3 if local2 != 0 else goto BB#2"]
+        b2 [label="BB#2:\nlocal1 = s\ns = 0\ngoto BB#1"]
+        b3 [label="BB#3:\ngoto BB#8 if local2 == 128 else goto BB#4"]
+        b4 [label="BB#4:\ngoto BB#6 if local2 != s else goto BB#5"]
+        b5 [label="BB#5:\ns = local1\ngoto BB#1"]
+        b6 [label="BB#6:\nlocal1 = local2\n*p = local1\np++\ngoto BB#7 if x != 100 else goto BB#8"]
+        b7 [label="BB#7:\nx++\ns = local1\ngoto BB#1"]
+        b8 [label="BB#8:\n*p = 0\nreturn arg0"]
+    }
+  
+  start -> b0;
+  b0 -> b1;
+  b1 -> b3 [label=if];
+  b1 -> b2 [label=else];
+  b2 -> b1;
+  b3 -> b8 [label=if];
+  b3 -> b4 [label=else];
+  b4 -> b6 [label=if];
+  b4 -> b5 [label=else];
+  b5 -> b1;
+  b6 -> b7 [label=if];
+  b6 -> b8 [label=else];
+  b7 -> b1;
+  b8 -> end;
+
+  start [shape=Mdiamond];
+  end [shape=Msquare];
+}

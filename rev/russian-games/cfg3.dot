@@ -1,0 +1,24 @@
+digraph G {
+    subgraph nodes {
+        node [style=filled,shape=rect,fontname="Courier New"]
+        b0 [label="BB#0: loop preheader\np = arg0\nq = arg1"]
+        b1 [label="BB#1:\ngoto BB#4 if *p != *q else goto BB#2"]
+        b2 [label="BB#2:\ngoto BB#5 if *p == 0 else goto BB#3"]
+        b3 [label="BB#3:\n++p\n++q\ngoto BB#1"]
+        b4 [label="BB#4:\nreturn 0"]
+        b5 [label="BB#5:\nreturn 1"]
+    }
+  
+  start -> b0;
+  b0 -> b1;
+  b1 -> b4 [label=if];
+  b1 -> b2 [label=else];
+  b2 -> b5 [label=if];
+  b2 -> b3 [label=else];
+  b3 -> b1;
+  b4 -> end;
+  b5 -> end;
+
+  start [shape=Mdiamond];
+  end [shape=Msquare];
+}
